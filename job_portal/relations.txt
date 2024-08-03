@@ -1,0 +1,71 @@
+- Job Listing entity
+job_id int
+job title varchar(50)
+recruiter id int foreign key from recruiter
+job description varchar(50)
+skill id foreign key from skill
+
+ - Relationship:
+one recruiter can post many jobs listing
+one job can have many skills
+
+ - Application entity
+job_id int foreign key from job listing
+job_seeker_id foreign key job seeker
+applicationn id int primary key
+status enum(Applied,Interviewed,Rejected)
+
+Relationship:
+one job seeker can have many job applications
+
+ - Relationship:
+job id foreign key from job listing
+
+- Feedback Entity
+feedback_id int primary key 
+job_seeker_id foreign key job seeker table
+feedback_title varchar(50)
+
+ - Relationship
+one job seeker can give many feedback
+
+-Skill Entity
+skill id primry key
+skill name varchar(50)
+
+- Subscription Entity
+subscription_id int primary key
+subscription_type varchar(50) 
+subscription_start_date date
+subscription_end_date date
+job seeker id foreign key from job seeker
+
+
+
+
+INSERT INTO job_listing (job_title, recruiter_id, job_description, skill_id)
+VALUES 
+('Java Developer', 1, 'Looking for an experienced Java Developer with strong skills in Java and Spring.', 1),
+('SQL Database Administrator', 1, 'Looking for a', 2);
+
+ALTER TABLE job_listing 
+MODIFY COLUMN job_description VARCHAR(255);
+
+
+SELECT * FROM job_listing
+WHERE job_title LIKE '%Developer%'; -- Example search for job titles containing 'Developer'
+
+- job listing should match with their skill id
+
+
+USE job_portal;
+
+SELECT jl.job_id, jl.job_title, jl.job_description, s.skill_name
+FROM job_listing jl
+JOIN skill s ON jl.skill_id = s.skill_id
+WHERE s.skill_name = 'Java'; -- Replace with the skill name you want to filter by
+
+INSERT INTO job_seeker (profile_summary, full_name, mobile_no, resume, experience, skill_id)
+SELECT 'Profile Summary', 'Full Name', '1234567890', 'resume.pdf', 'Experience', skill_id
+FROM Skill
+WHERE skill_name = 'Python';
